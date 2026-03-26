@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHUR-COF • Churros y Café Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+        
+        .logo-font { font-family: 'Playfair Display', sans-serif; }
+        
+        .hero-bg {
+            background: linear-gradient(90deg, rgba(107, 62, 30, 0.92), rgba(250, 204, 21, 0.85)), 
+                        url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- NAV -->
+    <nav class="bg-[#6b3e1e] text-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-[#facc15] rounded-2xl flex items-center justify-center text-4xl">🥨☕</div>
+                <h1 class="logo-font text-4xl font-bold">CHUR-COF</h1>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#inicio" class="hover:text-[#facc15]">Inicio</a>
+                <a href="#sobre" class="hover:text-[#facc15]">Sobre Nosotros</a>
+                <a href="#tienda" class="hover:text-[#facc15]">Tienda</a>
+                <a href="#contacto" class="hover:text-[#facc15]">Contacto</a>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <div onclick="toggleCart()" class="relative cursor-pointer">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-[#facc15] text-[#6b3e1e] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </div>
+                <a href="https://wa.me/50245174517" target="_blank" 
+                   class="bg-[#facc15] text-[#6b3e1e] px-6 py-2.5 rounded-3xl font-semibold flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i> 4517
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl">
+                <h1 class="text-6xl md:text-7xl font-bold leading-none logo-font">Tu adicción<br>perfecta</h1>
+                <p class="mt-6 text-2xl text-amber-100">Churros crujientes y café premium</p>
+                <div class="mt-10 flex gap-4">
+                    <a href="#tienda" class="bg-[#facc15] hover:bg-amber-400 text-[#6b3e1e] font-bold px-10 py-4 rounded-3xl text-lg">Ver Tienda</a>
+                    <a href="https://wa.me/50245174517" target="_blank" class="border-2 border-white px-8 py-4 rounded-3xl font-medium flex items-center gap-2">
+                        <i class="fab fa-whatsapp"></i> Pedir ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section id="sobre" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-[#facc15] font-semibold">CHUR-COF • GUATEMALA</span>
+                    <h2 class="text-5xl font-bold text-[#6b3e1e] mt-4">Calidad premium<br>en cada pedido</h2>
+                    <p class="mt-8 text-lg text-gray-700">
+                        Emprendimiento guatemalteco dedicado a ofrecer churros artesanales y café de especialidad con los más altos estándares de calidad.
+                    </p>
+                </div>
+                <div class="bg-[#6b3e1e] text-white p-12 rounded-3xl">
+                    <p class="text-2xl leading-relaxed">
+                        Churros recién hechos y café preparado con cariño. 
+                        Servicio local y entrega a domicilio en Guatemala City.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIENDA -->
+    <section id="tienda" class="py-20 bg-[#f8f1e3]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="bg-[#6b3e1e] text-[#facc15] px-5 py-2 rounded-3xl text-sm font-medium">NUESTROS PRODUCTOS</span>
+                <h2 class="text-5xl font-bold text-[#6b3e1e] mt-4">Elige tu favorito</h2>
+            </div>
+
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Productos se cargan con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE PRODUCTO -->
+    <div id="product-modal" class="hidden fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center">
+        <div class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden">
+            <div class="p-4 flex justify-end">
+                <button onclick="closeModal()" class="text-4xl leading-none text-gray-400 hover:text-black">×</button>
+            </div>
+            <div class="px-8 pb-8">
+                <div id="modal-image" class="rounded-3xl overflow-hidden mb-6"></div>
+                
+                <div id="modal-name" class="text-3xl font-bold text-[#6b3e1e]"></div>
+                <div id="modal-price" class="text-4xl text-[#facc15] font-bold mt-1"></div>
+                
+                <p id="modal-description" class="mt-6 text-gray-600"></p>
+
+                <div class="mt-8 flex items-center gap-4">
+                    <label class="font-medium">Cantidad:</label>
+                    <div class="flex border rounded-3xl">
+                        <button onclick="changeQuantity(-1)" class="px-5 py-2 text-2xl">-</button>
+                        <input id="modal-quantity" type="number" value="1" min="1" class="w-16 text-center text-xl focus:outline-none">
+                        <button onclick="changeQuantity(1)" class="px-5 py-2 text-2xl">+</button>
+                    </div>
+                </div>
+
+                <button onclick="addToCartFromModal()" 
+                        class="mt-10 w-full bg-[#6b3e1e] hover:bg-[#8b4f2a] text-white py-6 rounded-3xl text-xl font-semibold">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="py-20 bg-[#6b3e1e] text-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-5xl font-bold">¿Listo para ordenar?</h2>
+            <p class="mt-4 text-xl text-amber-100">Escríbenos por WhatsApp al 4517</p>
+            <a href="https://wa.me/50245174517" target="_blank"
+               class="mt-10 inline-flex items-center gap-4 bg-[#facc15] text-[#6b3e1e] px-12 py-5 rounded-3xl text-2xl font-bold">
+                <i class="fab fa-whatsapp text-4xl"></i>
+                Contactar al 4517
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#6b3e1e] text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-[#facc15] rounded-2xl flex items-center justify-center text-3xl">🥨☕</div>
+                <h2 class="logo-font text-3xl font-bold">CHUR-COF</h2>
+            </div>
+            <p class="text-sm">Churros y café premium • Guatemala City</p>
+            <p class="text-xs mt-8 text-white/60">© 2026 CHUR-COF • Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- CARRITO -->
+    <div id="cart-panel" class="hidden fixed inset-0 bg-black/60 z-[2000] flex justify-end">
+        <div class="bg-white w-full max-w-md h-full overflow-auto">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Tu Carrito</h3>
+                <button onclick="toggleCart()" class="text-4xl">×</button>
+            </div>
+            <div id="cart-items" class="p-6 space-y-6"></div>
+            
+            <div class="sticky bottom-0 bg-white p-6 border-t">
+                <div class="flex justify-between text-xl font-semibold mb-6">
+                    <span>Total</span>
+                    <span id="cart-total">Q 0</span>
+                </div>
+                <button onclick="checkout()" class="w-full py-5 bg-[#facc15] text-[#6b3e1e] rounded-3xl text-xl font-bold">
+                    Finalizar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Churros Clásicos",
+                price: 12,
+                description: "Churros tradicionales cubiertos con azúcar y canela. 6 unidades.",
+                image: "https://picsum.photos/id/1015/600/600"
+            },
+            {
+                id: 2,
+                name: "Churros con Chocolate",
+                price: 15,
+                description: "Churros bañados en delicioso chocolate derretido. 6 unidades.",
+                image: "https://picsum.photos/id/292/600/600"
+            },
+            {
+                id: 3,
+                name: "Café Frío",
+                price: 10,
+                description: "Café frío refrescante preparado con granos de especialidad.",
+                image: "https://picsum.photos/id/201/600/600"
+            },
+            {
+                id: 4,
+                name: "Combo Churros con Café",
+                price: 25,
+                description: "4 churros clásicos + 1 café frío. La combinación perfecta.",
+                image: "https://picsum.photos/id/133/600/600"
+            }
+        ];
+
+        let cart = [];
+
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card bg-white rounded-3xl overflow-hidden cursor-pointer shadow-sm';
+                card.innerHTML = `
+                    <img src="${product.image}" class="w-full h-60 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-semibold text-xl">${product.name}</h3>
+                        <p class="text-[#facc15] text-3xl font-bold mt-2">Q${product.price}</p>
+                        <p class="text-sm text-gray-600 mt-4 line-clamp-3">${product.description}</p>
+                    </div>
+                `;
+                card.onclick = () => showProductModal(product);
+                container.appendChild(card);
+            });
+        }
+
+        let currentProduct = null;
+
+        function showProductModal(product) {
+            currentProduct = product;
+            document.getElementById('modal-image').innerHTML = `<img src="${product.image}" class="w-full h-80 object-cover">`;
+            document.getElementById('modal-name').textContent = product.name;
+            document.getElementById('modal-price').textContent = `Q${product.price}`;
+            document.getElementById('modal-description').textContent = product.description;
+            document.getElementById('modal-quantity').value = 1;
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.getElementById('product-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function changeQuantity(amount) {
+            let qty = parseInt(document.getElementById('modal-quantity').value);
+            qty = Math.max(1, qty + amount);
+            document.getElementById('modal-quantity').value = qty;
+        }
+
+        function addToCartFromModal() {
+            if (!currentProduct) return;
+            const quantity = parseInt(document.getElementById('modal-quantity').value);
+            
+            for (let i = 0; i < quantity; i++) {
+                cart.push(currentProduct);
+            }
+            
+            updateCart();
+            closeModal();
+            showToast(`${quantity} × ${currentProduct.name} agregado al carrito`);
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').textContent = cart.length;
+            
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = "flex gap-4";
+                div.innerHTML = `
+                    <img src="${item.image}" class="w-20 h-20 object-cover rounded-2xl">
+                    <div class="flex-1">
+                        <p class="font-medium">${item.name}</p>
+                        <p class="text-[#facc15] font-semibold">Q${item.price}</p>
+                        <button onclick="removeFromCart(${index})" class="text-red-500 text-sm mt-2">Eliminar</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-12">Tu carrito está vacío</p>`;
+            }
+
+            document.getElementById('cart-total').textContent = `Q ${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            const panel = document.getElementById('cart-panel');
+            panel.classList.toggle('hidden');
+            if (!panel.classList.contains('hidden')) updateCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            alert("✅ ¡Pedido realizado con éxito!\n\nEn breve te contactaremos por WhatsApp al 4517 para confirmar tu entrega.");
+            cart = [];
+            toggleCart();
+            updateCart();
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `position:fixed; bottom:20px; right:20px; background:#6b3e1e; color:#facc15; padding:14px 24px; border-radius:9999px; box-shadow:0 10px 15px rgba(0,0,0,0.2); z-index:9999;`;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Inicializar
+        window.onload = () => {
+            renderProducts();
+        };
+    </script>
+</body>
+</html>
